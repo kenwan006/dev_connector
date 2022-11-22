@@ -3,7 +3,8 @@ const config = require('config');
 
 module.exports = function(req, res, next) {
     // Get token from the header
-    const token = req.header('x-auth-token');
+    // if we input the correct token into the header of post or get request, then this requset will be authorized
+    const token = req.header('x-auth-token'); 
 
     // Check if no token
     if (!token) {
