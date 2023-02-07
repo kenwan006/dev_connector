@@ -9,6 +9,8 @@ import Dashboard  from './components/dashboard/Dashboard';
 import ProfileForm from './components/profile-form/ProfileForm';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
+import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
 import PrivateRoute  from './components/routing/PrivateRoute';
 import './App.css';
 // Redux
@@ -35,6 +37,8 @@ const App = () => {
             <Route path="/" element={<Landing />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
+            <Route path="profiles" element={<Profiles />} />
+            <Route path="profile/:id" element={<Profile />} />
             <Route
             path="dashboard"
             element={<PrivateRoute component={Dashboard} />}
@@ -52,8 +56,8 @@ const App = () => {
             element={<PrivateRoute component={AddExperience} />}
             />
             <Route
-              path="add-education"
-              element={<PrivateRoute component={AddEducation} />}
+            path="add-education"
+            element={<PrivateRoute component={AddEducation} />}
             />
           </Routes>
       </Router>
