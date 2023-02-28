@@ -48,14 +48,12 @@ const AddEducation = ({ addEducation }) => {
           />
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            placeholder="* Degree or Certificate"
-            name="degree"
-            value={degree}
-            onChange={onChange}
-            required
-          />
+          <select name="degree" value={degree} onChange={onChange}>
+            <option>* Select highest degree</option>
+            <option value="PhD">PhD</option>
+            <option value="Master">Master</option>
+            <option value="Bachelor">Bachelor</option>
+          </select>
         </div>
         <div className="form-group">
           <input
