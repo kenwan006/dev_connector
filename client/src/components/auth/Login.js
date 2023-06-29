@@ -60,11 +60,7 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-<<<<<<< HEAD
   isAuthenticated: PropTypes.bool
-=======
-  isAuthenticated: PropTypes.func.isRequired
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
 }
 
 const mapStateToProps = state => ({ 
