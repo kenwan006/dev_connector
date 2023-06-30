@@ -4,98 +4,75 @@ const bcrypt = require('bcryptjs');
 const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { check, validationResult } =  require('express-validator'); 
+const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
 
-<<<<<<< HEAD
-// @route   GET api/auth (check if the token provided is valid)
-// @desc    Test route
-// @access  Public
-router.get('/', auth, async (req, res) => { //auth - the token in the req body' header will be decoded to {id, name, email, password...}
-=======
-// @route   GET api/auth
-// @desc    Test route
-// @access  Public
+// @route    GET api/auth
+// @desc     Get user by token
+// @access   Private
 router.get('/', auth, async (req, res) => {
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
-    try {
-        const user = await User.findById(req.user.id).select('-password');
-        res.json(user);
-    } catch (err) {
-        console.error(err.message);
-        res.status('500').send('Sever Error');
-    }
-
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
-<<<<<<< HEAD
-// @route   POST api/auth  (login the user) 
-=======
-// @route   POST api/auth
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
-// @desc    Authenticate user & get token ( Authentication means we have correct password and username when log in)
-// @access  Public
-router.post('/', 
-[
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is requried').exists()
-], 
-async(req, res) => {
+// @route    POST api/auth
+// @desc     Authenticate user & get token
+// @access   Public
+router.post(
+  '/',
+  check('email', 'Please include a valid email').isEmail(),
+  check('password', 'Password is required').exists(),
+  async (req, res) => {
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array()});
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
     const { email, password } = req.body;
 
     try {
+      let user = await User.findOne({ email });
 
-<<<<<<< HEAD
-        // See if user exists - findOne() is a function provided by moogoose
-=======
-        // See if user exists
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
-        let user = await User.findOne({ email }); //*in users.js we have to create a user using User class, but here we just grab it from database
+      if (!user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+      }
 
-        if(!user) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials'}] });
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+      }
+
+      const payload = {
+        user: {
+          id: user.id
         }
+      };
 
-<<<<<<< HEAD
-        // See if password matches - compared the password being entered and password stored in the moogodb
-=======
-        // See if password matches
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(400).json({ errors: [{ msg: 'Invalid Credentials'}] });
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        { expiresIn: '5 days' },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
         }
-
-
-        // Return jsonwebtoken if we provide the correct username and password
-        const payload = {
-            user: {
-                id: user.id
-            }
-        }
-
-        jwt.sign(
-            payload, 
-            config.get('jwtSecret'),
-            { expiresIn: 36000000 },
-            (err, token) => {
-                if(err) throw err;
-                res.json( { token });
-            }
-        );
-
-    } catch(err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+      );
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
     }
-
-});
+  }
+);
 
 module.exports = router;

@@ -17,12 +17,8 @@ const Post = require('../../models/Post');
 router.get('/me', auth, async (req, res) => {
     try {
         //remember in the auth, token was decoded to user and save it to req.user object!!
-<<<<<<< HEAD
         const profile = await Profile.findOne({ user: req.user.id }).populate("user", ['name', 'avatar']);
-=======
-        const profile = await Profile.findOne({ user: req.user.id}).populate("user", ['name', 'avatar']);
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
-        
+
         if(!profile) {
             return res.status(400).json({ msg: 'There is no profile for this user'});
         }

@@ -39,22 +39,15 @@ async (req, res) => {
 });
 
 // @route   GET api/posts
-<<<<<<< HEAD
 // @desc    Get all posts
-=======
-// @desc    Create all posts
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
 // @access  Private
 router.get('/', auth, async(req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
         res.json(posts);
     } catch (err) {
-<<<<<<< HEAD
         console.error(err.message);ß
-=======
-        console.error(err.message);
->>>>>>> 23dd43fcb20212ef4b7b9d9c66001e2328b3d88d
+
         res.status(500).send('Server Error');
     }
 });
