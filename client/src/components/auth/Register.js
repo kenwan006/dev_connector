@@ -16,7 +16,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const { name, email, password, password2 } = formData;
 
   const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value }); //event handler for any change
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -96,5 +96,6 @@ Register.propTypes = {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
+
 
 export default connect(mapStateToProps, { setAlert, register })(Register);
