@@ -68,4 +68,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { login })(Login);
+//connect is a function provided by the react-redux library that connects a React component to the Redux store.
 
