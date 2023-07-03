@@ -72,7 +72,7 @@ export const getProfiles = () => async (dispatch) => {
     }
   };
 
-// Create or update profile
+// Create or update profile - edit (true) - edit existing profile; edit(false) - create a new profile
 export const createProfile =
   (formData, navigate, edit = false) =>
   async (dispatch) => {
