@@ -1,11 +1,11 @@
 # dev_connector
 
 ## Install server dependencies
-  -- npm install
+  `npm install`
 
 ## Install client dependencies
-  -- cd client
-  -- npm install
+  `cd client`
+  ` npm install`
 
-## Run both React and Express from the root
-  -- npm run dev
+## Run both Server and Client from the root
+  `npm run dev`
