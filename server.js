@@ -4,6 +4,7 @@ const path = require('path');
 
 const app = express();
 
+//update 2024
 // Connect Database
 connectDB();
 
